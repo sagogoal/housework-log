@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Flex, Input, Stack } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Input, Stack, VStack } from "@chakra-ui/react";
 import { Field } from "@/components/ui/field";
 import { PasswordInput } from "@/components/ui/password-input";
 import { useForm } from "react-hook-form";
@@ -46,19 +46,35 @@ export const Login: FC = () => {
 
   return (
     <Flex justify="center" align="center" h="100vh">
-      <form onSubmit={onSubmit}>
-        <Stack gap="4" align="flex-start" maxW="sm">
-          <Field label="Email" invalid={!!errors.email} errorText={errors.email?.message}>
-            <Input {...register("email", { required: "E-mail is required" })} />
-          </Field>
+      <VStack>
+        <Heading as="h1" size="lg" mb="4">
+          kajilog
+        </Heading>
+        <Box bg="gray.100" p="8" rounded="md">
+          <form onSubmit={onSubmit}>
+            <Stack gap="4" align="flex-start" maxW="sm">
+              <Field label="Email" invalid={!!errors.email} errorText={errors.email?.message}>
+                <Input {...register("email", { required: "E-mail is required" })} bg={"white"} />
+              </Field>
 
-          <Field label="Password" invalid={!!errors.password} errorText={errors.password?.message}>
-            <PasswordInput {...register("password", { required: "Password is required" })} />
-          </Field>
+              <Field
+                label="Password"
+                invalid={!!errors.password}
+                errorText={errors.password?.message}
+              >
+                <PasswordInput
+                  {...register("password", { required: "Password is required" })}
+                  bg={"white"}
+                />
+              </Field>
 
-          <Button type="submit">Login</Button>
-        </Stack>
-      </form>
+              <Button type="submit" color={"gray.100"} bg={"teal.500"} _hover={{ bg: "teal.600" }}>
+                Login
+              </Button>
+            </Stack>
+          </form>
+        </Box>
+      </VStack>
     </Flex>
   );
 };
