@@ -1,16 +1,26 @@
-import { FC, memo } from "react";
+"use client";
+
+import { Button, Flex, Input, Stack } from "@chakra-ui/react";
+import { Field } from "@/components/ui/field";
+import { PasswordInput } from "@/components/ui/password-input";
+import { useForm } from "react-hook-form";
+import { FC } from "react";
 import { createClient } from "@supabase/supabase-js";
 
+//TODO supabaseの認証情報用のコンポーネントに外出しする
 const supabase = createClient(
   import.meta.env.VITE_APP_SUPABASE_URL,
   import.meta.env.VITE_APP_SUPABASE_ANON_KEY
 );
 
-async function signIn() {
+//TODO サインイン成功時の処理（画面遷移）、失敗時の画面表示
+async function signIn(formData: FormValues) {
+  const { email, password } = formData;
   const { data, error } = await supabase.auth.signInWithPassword({
-    email: "qqqqq@gmail.com",
-    password: "aaaaa",
+    email: email,
+    password: password,
   });
+
   if (error) {
     console.error("Error signing in:", error.message);
     console.log("User data:", data);
@@ -20,6 +30,35 @@ async function signIn() {
   }
 }
 
-export const Login: FC = memo(() => {
-  return <button onClick={signIn}>Sign Up</button>;
-});
+interface FormValues {
+  email: string;
+  password: string;
+}
+
+export const Login: FC = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
+
+  const onSubmit = handleSubmit((data) => signIn(data));
+
+  return (
+    <Flex justify="center" align="center" h="100vh">
+      <form onSubmit={onSubmit}>
+        <Stack gap="4" align="flex-start" maxW="sm">
+          <Field label="Email" invalid={!!errors.email} errorText={errors.email?.message}>
+            <Input {...register("email", { required: "E-mail is required" })} />
+          </Field>
+
+          <Field label="Password" invalid={!!errors.password} errorText={errors.password?.message}>
+            <PasswordInput {...register("password", { required: "Password is required" })} />
+          </Field>
+
+          <Button type="submit">Login</Button>
+        </Stack>
+      </form>
+    </Flex>
+  );
+};
