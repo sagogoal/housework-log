@@ -1,6 +1,6 @@
 name: CICD to Firebase Hosting
 
-# on: [push]
+# on: [push] TODO 実行するように修正
 on:
   push:
     branches:

@@ -6,19 +6,24 @@
 
 ## 実行準備
 - AuthUserの登録は、管理者のみ行える。Supabase AuthのUsersテーブルに手動で追加する。
+- firebase hosting Supabaseのテーブルを作成する。
+- cicd.ymlを適宜修正し、GHAのシークレットを登録する。
+- .envファイルを作成する。
 
 ## 開発環境
 - Vite
+- TypeScript
 - React V19
   - React Router
   - react-hook-form
   - vitest
   - testing-library
-- TypeScript
+  - Jotai
+- Chakra UI V3
+
 - GitHub Actions
 - Firebase Hosting
 - Supabase, Auth
-- Chakra UI V3
 
 ## アノテーションコメント凡例
 ### // TODO: 後で実装する
